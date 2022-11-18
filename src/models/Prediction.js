@@ -1,9 +1,11 @@
 const mongoose = require("mongoose");
 
 const PredictionSchema = new mongoose.Schema({
+  _id: {
+    type: mongoose.Schema.Types.ObjectId,
+  },
   match: {
     type: mongoose.Schema.Types.ObjectId,
-    required: [true, "Por favor agregue el ganador"],
     ref: "Match",
   },
   winner: {
