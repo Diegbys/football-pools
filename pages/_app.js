@@ -1,7 +1,22 @@
-import '../styles/globals.css'
+import "../styles/globals.css";
+import { CacheProvider } from "@emotion/react";
+import createEmotionCache from "../src/config/createEmotionCache";
+import AuthProvider from "../src/auth/useAuth";
 
-function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
+const clientSideEmotionCache = createEmotionCache();
+
+function MyApp({
+  Component,
+  pageProps,
+  emotionCache = clientSideEmotionCache,
+}) {
+  return (
+    <CacheProvider value={emotionCache}>
+      <AuthProvider>
+        <Component {...pageProps} />
+      </AuthProvider>
+    </CacheProvider>
+  );
 }
 
-export default MyApp
+export default MyApp;
