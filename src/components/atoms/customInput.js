@@ -1,6 +1,13 @@
 import TextField from "@mui/material/TextField";
 
-export default function CustomInput({ label, type, value, onChange, name }) {
+export default function CustomInput({
+  label,
+  type,
+  value,
+  onChange,
+  name,
+  className,
+}) {
   return (
     <TextField
       style={{ width: "100%" }}
@@ -10,6 +17,7 @@ export default function CustomInput({ label, type, value, onChange, name }) {
       value={value}
       onChange={onChange}
       name={name}
+      className={className}
     />
   );
 }

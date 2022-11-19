@@ -6,9 +6,8 @@ import CustomButtom from "../../src/components/atoms/customButtom";
 import styles from "../../styles/Login.module.css";
 import React, { useContext } from "react";
 import { useRouter } from "next/router";
-import Loader from "../../src/components/atoms/loader";
-import ModalAlert from "../../src/components/organisms/modalAlert";
 import { AuthContext } from "../../src/auth/useAuth";
+import Image from "next/image";
 
 export default function Login() {
   const [data, setData] = React.useState({ name: "", password: "" });
@@ -51,13 +50,22 @@ export default function Login() {
   return (
     <Layout title="Inicio de sesión">
       <div className={styles.container}>
+        <Image
+          src="/logo_qatar.jpeg"
+          width={200}
+          height={200}
+          alt="Qatar_logo"
+        />
         <CustomCard>
-          <Typography variant="h5">Inicio de sesión</Typography>
+          <Typography variant="h5" className={styles.title}>
+            Inicio de sesión
+          </Typography>
           <CustomInput
             label="Usuario"
             onChange={handleInputs}
             name="name"
             value={data.name}
+            className={styles.inputs}
           />
           <CustomInput
             label="Contraseña"
@@ -65,8 +73,13 @@ export default function Login() {
             type="password"
             name="password"
             value={data.password}
+            className={styles.inputs}
           />
-          <CustomButtom text="Iniciar" action={() => handleSubmit()} />
+          <CustomButtom
+            text="Iniciar"
+            action={() => handleSubmit()}
+            className={styles.button}
+          />
         </CustomCard>
       </div>
     </Layout>

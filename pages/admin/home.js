@@ -1,36 +1,70 @@
 import Layout from "../../src/components/layouts/layout";
 import Typography from "@mui/material/Typography";
 import CustomCard from "../../src/components/atoms/customCard";
-import CustomInput from "../../src/components/atoms/customInput";
-import CustomButtom from "../../src/components/atoms/customButtom";
 import styles from "../../styles/Login.module.css";
 import React, { useContext } from "react";
 import { useRouter } from "next/router";
-import Loader from "../../src/components/atoms/loader";
-import ModalAlert from "../../src/components/organisms/modalAlert";
 import Container from "@mui/material/Container";
 import { AuthContext } from "../../src/auth/useAuth";
+import { Box } from "@mui/system";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
+import SportsSoccerIcon from "@mui/icons-material/SportsSoccer";
 
 export default function AdminHome() {
-  const { user, isLogged } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const router = useRouter();
 
-  console.log(user);
+  const cardOption = (url, icon, text) => {
+    return (
+      <CustomCard
+        onClick={() => router.push(url)}
+        className={styles.options_card}
+      >
+        {icon}
+        <Typography variant="h5" style={{ marginRight: 30 }}>
+          {text}
+        </Typography>
+        <KeyboardDoubleArrowRightIcon
+          color="secondary"
+          className={styles.option_icon}
+        />
+      </CustomCard>
+    );
+  };
 
   return (
     <Layout title="Inicio de sesión" deprived>
       {user && (
         <Container style={{ paddingTop: 50 }}>
-          <Typography variant="h4" fontWeight={100}>
+          <Box
+            component="img"
+            src="/backgroun_qatar.png"
+            height={200}
+            className={styles.background_image}
+          />
+          <Typography
+            variant="h4"
+            fontWeight={100}
+            style={{ marginBottom: 20 }}
+          >
             Bienvenido {user.name}
           </Typography>
 
-          <CustomCard onClick={() => router.push("/user")}>
-            Ver usuarios
-          </CustomCard>
-          <CustomCard onClick={() => router.push("/match")}>
-            Ver juegos
-          </CustomCard>
+          {cardOption(
+            "/user",
+            <AccountCircleIcon
+              color="primary"
+              className={styles.option_icon}
+            />,
+            "Ver usuarios"
+          )}
+
+          {cardOption(
+            "/match",
+            <SportsSoccerIcon color="primary" className={styles.option_icon} />,
+            "Ver juegos"
+          )}
         </Container>
       )}
     </Layout>
