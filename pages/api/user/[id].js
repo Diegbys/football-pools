@@ -7,12 +7,9 @@ import dbConnect from "../../../src/utils/dbConnect";
 
 export default async function handler({ method, query: { id } }, res) {
   await dbConnect();
-  console.log(id);
   switch (method) {
     case "GET":
       try {
-        const prediction = await Prediction.find({});
-        console.log("sdafasdfafsd", prediction);
         const user = await User.findById(new mongoose.Types.ObjectId(id))
           .populate({
             path: "predictions",

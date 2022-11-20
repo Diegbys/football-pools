@@ -7,8 +7,10 @@ import Container from "@mui/material/Container";
 import CustomCard from "../../src/components/atoms/customCard";
 import CustomInput from "../../src/components/atoms/customInput";
 import { Fetch } from "../../src/utils/fetch";
-import { Box } from "@mui/system";
 import { AuthContext } from "../../src/auth/useAuth";
+import BackHeader from "../../src/components/organisms/backHeader";
+import styles from "../../styles/user.module.css";
+import SelectPrediction from "../../src/components/organisms/selectPrediction";
 
 function useForceUpdate() {
   let [value, setState] = React.useState(true);
@@ -21,7 +23,7 @@ export default function NewUser() {
   const [name, setName] = React.useState("");
   const [predictions, setPredictions] = React.useState();
   const handleForceupdateMethod = useForceUpdate();
-  const { setOpenDialog, setDialog } = useContext(AuthContext);
+  const { setOpenDialog, setDialog, setLoading } = useContext(AuthContext);
 
   React.useEffect(() => {
     if (dataFetchedRef.current) return;
@@ -53,7 +55,6 @@ export default function NewUser() {
 
     setPredictions(predictionsToSet);
     handleForceupdateMethod();
-    console.log(predictions);
   };
 
   const invalidPredictions = () => {
@@ -77,86 +78,46 @@ export default function NewUser() {
   const handleSubmit = async () => {
     if (!name || invalidPredictions()) {
       dialogSetting("Debe ingresar el nombre y seleccionar los resultados");
+      return;
     }
+
+    setLoading(true);
 
     const body = JSON.stringify({ name, predictions });
     const response = await Fetch("POST", "/api/user", body);
 
     if (!response.success) {
       dialogSetting("Ha ocurrido un error");
+      return;
     }
 
     router.push("/user");
+    setLoading(false);
   };
 
   return (
     <Layout title="Inicio de sesión" deprived>
-      <Container style={{ paddingTop: 50 }}>
-        <CustomButtom text="Volver" action={() => router.push("/user")} />
+      <Container style={{ paddingTop: 50, paddingBottom: 50 }}>
+        <BackHeader urlback="/user" />
 
-        <Typography variant="h4" fontWeight={100}>
+        <Typography variant="h4" className={styles.title_user}>
           Agregar nuevo usuario
         </Typography>
-        <CustomCard>
+        <CustomCard styles={{ marginBottom: 20 }}>
           <CustomInput
             label="Nombre"
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
-          <Typography variant="h5" fontWeight={100}>
-            Seleccione los resultados:
-          </Typography>
-          {predictions &&
-            predictions.map((prediction, index) => (
-              <>
-                <Typography key={index}>
-                  {" "}
-                  {prediction.match.teams[0].name} VS{" "}
-                  {prediction.match.teams[1].name}{" "}
-                  {prediction.match.date.slice(0, 10)}
-                </Typography>
-                <Box style={{ display: "flex" }}>
-                  <Typography
-                    onClick={() =>
-                      handleWinners(index, prediction.match.teams[0]._id)
-                    }
-                    style={{
-                      margin: 10,
-                      color:
-                        prediction.match.teams[0]._id === prediction.winner
-                          ? "red"
-                          : "black",
-                    }}
-                  >
-                    {prediction.match.teams[0].name}
-                  </Typography>
-                  <Typography
-                    onClick={() =>
-                      handleWinners(index, prediction.match.teams[1]._id)
-                    }
-                    style={{
-                      margin: 10,
-                      color:
-                        prediction.match.teams[1]._id === prediction.winner
-                          ? "red"
-                          : "black",
-                    }}
-                  >
-                    {prediction.match.teams[1].name}
-                  </Typography>
-                  <Typography
-                    onClick={() => handleWinners(index, null, true)}
-                    style={{
-                      margin: 10,
-                      color: prediction.tie ? "red" : "black",
-                    }}
-                  >
-                    Empate
-                  </Typography>
-                </Box>
-              </>
-            ))}
         </CustomCard>
+        <Typography variant="h5" fontWeight={100} className={styles.title_user}>
+          Seleccione los resultados:
+        </Typography>
+
+        <SelectPrediction
+          predictions={predictions}
+          handleWinners={handleWinners}
+        />
 
         <CustomButtom text="Agregar usuario" action={() => handleSubmit()} />
       </Container>

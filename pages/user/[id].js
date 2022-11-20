@@ -1,10 +1,15 @@
 import Layout from "../../src/components/layouts/layout";
 import Typography from "@mui/material/Typography";
-import CustomButtom from "../../src/components/atoms/customButtom";
 import React from "react";
 import { useRouter } from "next/router";
 import Container from "@mui/material/Container";
 import { AuthContext } from "../../src/auth/useAuth";
+import BackHeader from "../../src/components/organisms/backHeader";
+import CustomCard from "../../src/components/atoms/customCard";
+import TitleCardMatch from "../../src/components/organisms/titleCardMatch";
+import styles from "../../styles/user.module.css";
+import { Box } from "@mui/system";
+import TeamCircle from "../../src/components/molecules/teamCircle";
 
 export default function User({ query }) {
   const { user } = React.useContext(AuthContext);
@@ -29,72 +34,31 @@ export default function User({ query }) {
       .then((res) => res.json())
       .catch((e) => console.log(e));
     setResponse(response);
-    console.log(response);
   };
-
-  //   const usersList = () => {
-  //     if (!user) {
-  //       return;
-  //     }
-
-  //     if (!response) {
-  //       return <Typography>cargando</Typography>;
-  //     }
-
-  //     if (!response.success) {
-  //       return <Typography>{response.message}</Typography>;
-  //     }
-
-  //     return (
-  //       <>
-  //         {response.users.map((user, index) => (
-  //           <div key={index}>
-  //             <Typography>
-  //               {user.name} {user.points}
-  //             </Typography>
-  //             <CustomButtom
-  //               text="Ver"
-  //               action={() => router.push(`user/${user._id}`)}
-  //             />
-  //             <CustomButtom text="Eliminar" />
-  //           </div>
-  //         ))}
-  //       </>
-  //     );
-  //   };
 
   return (
     <Layout title="Inicio de sesión">
-      <Container style={{ paddingTop: 50 }}>
-        {user && (
-          <CustomButtom text="Volver" action={() => router.push("/user")} />
-        )}
+      <Container style={{ paddingTop: 50, paddingBottom: 50 }}>
+        {user && <BackHeader urlback="/user" />}
 
         {response?.user && (
           <>
-            <Typography variant="h4" fontWeight={100}>
+            <Typography variant="h4" className={styles.title_user}>
               {response.user.name}
             </Typography>
             {response.user.predictions.map((prediction, index) => (
-              <>
-                <Typography key={index}>
-                  {prediction.match.teams[0].name} VS
-                  {prediction.match.teams[1].name}
-                  {prediction.match.date.slice(0, 10)}
-                </Typography>
-                <Typography key={index}>
-                  Ganador: {prediction.winner?.name}
-                </Typography>
-              </>
+              <CustomCard key={index} className={styles.card_predictions}>
+                <TitleCardMatch match={prediction.match} />
+                <Box>
+                  <Typography variant="h6">
+                    {prediction.winner ? "Ganador: " : "Empate"}
+                  </Typography>
+                  <TeamCircle team={prediction.winner} />
+                </Box>
+              </CustomCard>
             ))}
           </>
         )}
-
-        {/* {usersList()}
-        <CustomButtom
-          text="Agregar usuario"
-          action={() => router.push("/user/newUser")}
-        /> */}
       </Container>
     </Layout>
   );

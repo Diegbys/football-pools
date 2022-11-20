@@ -7,14 +7,15 @@ import Container from "@mui/material/Container";
 import { AuthContext } from "../../src/auth/useAuth";
 import { Fetch } from "../../src/utils/fetch";
 import CustomCard from "../../src/components/atoms/customCard";
-import moment from "moment";
+import BackHeader from "../../src/components/organisms/backHeader";
+import styles from "../../styles/user.module.css";
+import TitleCardMarch from "../../src/components/organisms/titleCardMatch";
 
 export default function MatchIndex() {
-  const { user, isLogged } = React.useContext(AuthContext);
+  const { user } = React.useContext(AuthContext);
   const [response, setResponse] = React.useState();
   const router = useRouter();
   const dataFetchedRef = React.useRef(false);
-  moment.locale("en");
 
   React.useEffect(() => {
     if (dataFetchedRef.current) return;
@@ -44,13 +45,13 @@ export default function MatchIndex() {
     return (
       <>
         {response.matches.map((match, index) => (
-          <CustomCard key={index}>
-            <Typography>
-              {match.teams[0].name} VS {match.teams[1].name}{" "}
-              {match.date.slice(0, 10)}
-            </Typography>
+          <CustomCard key={index} styles={{ marginBottom: 20 }}>
+            <TitleCardMarch match={match} />
             <Typography>{match.result ? "se logro" : ""}</Typography>
-            <CustomButtom text="Seleccionar resultado" />
+            <CustomButtom
+              text="Seleccionar resultado"
+              action={() => router.push(`/match/${match._id}`)}
+            />
           </CustomCard>
         ))}
       </>
@@ -60,9 +61,8 @@ export default function MatchIndex() {
   return (
     <Layout title="Inicio de sesión" deprived>
       <Container style={{ paddingTop: 50 }}>
-        <CustomButtom text="Volver" action={() => router.push("/admin/home")} />
-
-        <Typography variant="h4" fontWeight={100}>
+        <BackHeader urlback="/admin/home" />
+        <Typography variant="h4" fontWeight={100} className={styles.title_user}>
           Partidos
         </Typography>
         {matchs()}

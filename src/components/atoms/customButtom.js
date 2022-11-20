@@ -1,10 +1,17 @@
 import * as React from "react";
 import Button from "@mui/material/Button";
 
-export default function CustomButtom({ text, action, className }) {
+export default function CustomButtom({
+  text,
+  action,
+  className,
+  variant = "outlined",
+  startIcon,
+}) {
   return (
     <Button
-      variant="outlined"
+      startIcon={startIcon}
+      variant={variant}
       onClick={action}
       style={{ borderRadius: 10 }}
       className={className}

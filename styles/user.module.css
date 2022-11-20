@@ -1,0 +1,25 @@
+.title_user {
+  margin-bottom: 20px;
+  font-weight: 100;
+}
+
+.user_card_container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.user_card_name {
+  font-size: 20px;
+}
+
+.card_predictions {
+  margin-bottom: 20px;
+}
+
+.select_result_container {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 30px;
+}

@@ -5,9 +5,15 @@ import React from "react";
 import { useRouter } from "next/router";
 import Container from "@mui/material/Container";
 import { AuthContext } from "../../src/auth/useAuth";
+import BackHeader from "../../src/components/organisms/backHeader";
+import CustomCard from "../../src/components/atoms/customCard";
+import { Box } from "@mui/material";
+import CircleButton from "../../src/components/atoms/circleButton";
+import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
+import styles from "../../styles/user.module.css";
 
 export default function User() {
-  const { user, isLogged } = React.useContext(AuthContext);
+  const { user } = React.useContext(AuthContext);
   const [response, setResponse] = React.useState();
   const router = useRouter();
   const dataFetchedRef = React.useRef(false);
@@ -47,16 +53,17 @@ export default function User() {
     return (
       <>
         {response.users.map((user, index) => (
-          <div key={index}>
-            <Typography>
-              {user.name} {user.points}
-            </Typography>
-            <CustomButtom
-              text="Ver"
+          <CustomCard key={index} className={styles.user_card_container}>
+            <Box>
+              <Typography className={styles.user_card_name}>
+                <b>Nombre</b>: {user.name}. <b>Puntos:</b> {user.points}
+              </Typography>
+            </Box>
+            <CircleButton
+              icon={<RemoveRedEyeIcon style={{ color: "white" }} />}
               action={() => router.push(`user/${user._id}`)}
             />
-            <CustomButtom text="Eliminar" />
-          </div>
+          </CustomCard>
         ))}
       </>
     );
@@ -65,9 +72,9 @@ export default function User() {
   return (
     <Layout title="Inicio de sesión" deprived>
       <Container style={{ paddingTop: 50 }}>
-        <CustomButtom text="Volver" action={() => router.push("/admin/home")} />
+        <BackHeader urlback="/admin/home" />
 
-        <Typography variant="h4" fontWeight={100}>
+        <Typography variant="h4" className={styles.title_user}>
           Usuarios
         </Typography>
         {usersList()}
