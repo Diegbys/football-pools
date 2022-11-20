@@ -5,7 +5,7 @@ export default async function handler(_, res) {
   await dbConnect();
 
   try {
-    const matches = await Match.find({}).populate({ path: "teams" });
+    const matches = await Match.find({}).populate({ path: "teams" }).populate({ path: "winner" });
     return res.status(200).json({ success: true, matches });
   } catch (error) {
     console.log(error);

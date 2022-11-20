@@ -10,6 +10,7 @@ import CustomCard from "../../src/components/atoms/customCard";
 import BackHeader from "../../src/components/organisms/backHeader";
 import styles from "../../styles/user.module.css";
 import TitleCardMarch from "../../src/components/organisms/titleCardMatch";
+import WinnerResult from "../../src/components/molecules/winnerResult";
 
 export default function MatchIndex() {
   const { user } = React.useContext(AuthContext);
@@ -47,11 +48,14 @@ export default function MatchIndex() {
         {response.matches.map((match, index) => (
           <CustomCard key={index} styles={{ marginBottom: 20 }}>
             <TitleCardMarch match={match} />
-            <Typography>{match.result ? "se logro" : ""}</Typography>
-            <CustomButtom
-              text="Seleccionar resultado"
-              action={() => router.push(`/match/${match._id}`)}
-            />
+            {match.result ? (
+              <WinnerResult winner={match.winner} />
+            ) : (
+              <CustomButtom
+                text="Seleccionar resultado"
+                action={() => router.push(`/match/${match._id}`)}
+              />
+            )}
           </CustomCard>
         ))}
       </>
@@ -60,7 +64,7 @@ export default function MatchIndex() {
 
   return (
     <Layout title="Inicio de sesión" deprived>
-      <Container style={{ paddingTop: 50 }}>
+      <Container style={{ paddingTop: 50, paddingBottom: 50 }}>
         <BackHeader urlback="/admin/home" />
         <Typography variant="h4" fontWeight={100} className={styles.title_user}>
           Partidos

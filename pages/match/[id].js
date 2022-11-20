@@ -68,7 +68,7 @@ export default function Match() {
       return;
     }
 
-    // router.push("/match");
+    router.push("/match");
     setLoading(false);
   };
 

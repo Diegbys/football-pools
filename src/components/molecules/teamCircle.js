@@ -11,6 +11,9 @@ export default function TeamCircle({ team, action, winner, tie }) {
     }
 
     if (!team && !tie) {
+      if (!action) {
+        return theme.palette.primary.main
+      }
       return theme.palette.secondary.main;
     }
 

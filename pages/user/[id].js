@@ -10,6 +10,7 @@ import TitleCardMatch from "../../src/components/organisms/titleCardMatch";
 import styles from "../../styles/user.module.css";
 import { Box } from "@mui/system";
 import TeamCircle from "../../src/components/molecules/teamCircle";
+import WinnerResult from "../../src/components/molecules/winnerResult";
 
 export default function User({ query }) {
   const { user } = React.useContext(AuthContext);
@@ -49,12 +50,7 @@ export default function User({ query }) {
             {response.user.predictions.map((prediction, index) => (
               <CustomCard key={index} className={styles.card_predictions}>
                 <TitleCardMatch match={prediction.match} />
-                <Box>
-                  <Typography variant="h6">
-                    {prediction.winner ? "Ganador: " : "Empate"}
-                  </Typography>
-                  <TeamCircle team={prediction.winner} />
-                </Box>
+                <WinnerResult winner={prediction.winner} />
               </CustomCard>
             ))}
           </>
