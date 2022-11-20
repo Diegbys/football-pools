@@ -8,7 +8,6 @@ export default function Layout({ children, title, deprived }) {
   const router = useRouter();
 
   React.useEffect(() => {
-    console.log(deprived);
     if (deprived && !isLogged()) {
       router.push("/admin/login");
     }

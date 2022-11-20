@@ -21,7 +21,6 @@ export default function User({ query }) {
   React.useEffect(() => {
     if (dataFetchedRef.current) return;
     dataFetchedRef.current = true;
-    console.log(router.query);
     getUser();
   }, []);
 

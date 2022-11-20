@@ -28,7 +28,6 @@ export default function Home({ users, error }) {
   const router = useRouter();
 
   React.useEffect(() => {
-    console.log(users);
     if (dataFetchedRef.current) return;
     dataFetchedRef.current = true;
     gettingUsers();
@@ -36,7 +35,6 @@ export default function Home({ users, error }) {
 
   const gettingUsers = async () => {
     setResponse(await getUsers());
-    console.log(await getUsers());
   };
 
   const rows = [
@@ -107,8 +105,6 @@ export async function getServerSideProps() {
     await dbConnect();
 
     const users = await User.find({ rol: 2 }).sort({ points: -1 });
-    console.log("users", users);
-
     return {
       props: {
         users: JSON.stringify(users),

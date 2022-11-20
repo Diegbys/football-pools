@@ -30,7 +30,6 @@ export default function Login() {
     })
       .then((res) => res.json())
       .catch((e) => console.log(e));
-    console.log(response, "esto es", response.success);
 
     if (!response.success) {
       setDialog({

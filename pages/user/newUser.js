@@ -33,7 +33,6 @@ export default function NewUser() {
 
   const getMatchs = async () => {
     const response = await Fetch("GET", "/api/match");
-    console.log(response);
     setPredictions(
       response.matches.map((match) => ({
         match: match,

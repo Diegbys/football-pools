@@ -27,7 +27,6 @@ export default function MatchIndex() {
   const getMatchs = async () => {
     const response = await Fetch("GET", "/api/match");
     setResponse(response);
-    console.log(response);
   };
 
   const matchs = () => {
