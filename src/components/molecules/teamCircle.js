@@ -12,7 +12,7 @@ export default function TeamCircle({ team, action, winner, tie }) {
 
     if (!team && !tie) {
       if (!action) {
-        return theme.palette.primary.main
+        return theme.palette.primary.main;
       }
       return theme.palette.secondary.main;
     }
@@ -43,13 +43,13 @@ export default function TeamCircle({ team, action, winner, tie }) {
           justifyContent: "center",
           borderStyle: "solid",
           alignItems: "center",
-          cursor: 'pointer'
+          cursor: "pointer",
         }}
         onClick={action}
       >
         <Box
           component="img"
-          src="https://d18bee67u93fo2.cloudfront.net/Img/Flags/Catar.png"
+          src={team ? `/${team.img}` : "/tie.png"}
           style={{ width: 30 }}
         />
       </Box>

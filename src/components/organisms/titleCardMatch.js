@@ -21,13 +21,13 @@ export default function TitleCardMatch({ match }) {
       >
         <Box
           component="img"
-          src="https://d18bee67u93fo2.cloudfront.net/Img/Flags/Catar.png"
+          src={`/${match.teams[0].img}`}
           style={{ width: 30, marginRight: 10 }}
         />
         <span style={{ marginRight: 10 }}>{match.teams[0].name} VS</span>
         <Box
           component="img"
-          src="https://d18bee67u93fo2.cloudfront.net/Img/Flags/Catar.png"
+          src={`/${match.teams[1].img}`}
           style={{ width: 30, marginRight: 10 }}
         />
         {match.teams[1].name}
