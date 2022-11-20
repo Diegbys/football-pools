@@ -11,6 +11,7 @@ import { Box } from "@mui/material";
 import CircleButton from "../../src/components/atoms/circleButton";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import styles from "../../styles/user.module.css";
+import { getUsers } from "../../src/utils/service";
 
 export default function User() {
   const { user } = React.useContext(AuthContext);
@@ -21,20 +22,11 @@ export default function User() {
   React.useEffect(() => {
     if (dataFetchedRef.current) return;
     dataFetchedRef.current = true;
-    getUsers();
+    gettingUsers();
   }, []);
 
-  const getUsers = async () => {
-    const response = await fetch("/api/user", {
-      method: "GET",
-      headers: {
-        "Content-type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .catch((e) => console.log(e));
-    setResponse(response);
-    console.log(response);
+  const gettingUsers = async () => {
+    setResponse(await getUsers());
   };
 
   const usersList = () => {

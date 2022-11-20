@@ -5,7 +5,7 @@ import Loader from "../components/atoms/loader";
 export const AuthContext = createContext();
 
 export default function AuthProvider({ children }) {
-  const [user, setUser] = useState({ name: "Alfredo Cárdenas" });
+  const [user, setUser] = useState();
   const [loading, setLoading] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
   const [dialog, setDialog] = useState({});

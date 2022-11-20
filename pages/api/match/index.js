@@ -5,7 +5,10 @@ export default async function handler(_, res) {
   await dbConnect();
 
   try {
-    const matches = await Match.find({}).populate({ path: "teams" }).populate({ path: "winner" });
+    const matches = await Match.find({})
+      .populate({ path: "teams" })
+      .populate({ path: "winner" })
+      .sort({ date: 1 });
     return res.status(200).json({ success: true, matches });
   } catch (error) {
     console.log(error);
