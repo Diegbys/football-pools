@@ -21,20 +21,19 @@ export default function User({ query }) {
   React.useEffect(() => {
     if (dataFetchedRef.current) return;
     dataFetchedRef.current = true;
+    const getUser = async () => {
+      const response = await fetch(`/api/user/${router.query.id}`, {
+        method: "GET",
+        headers: {
+          "Content-type": "application/json",
+        },
+      })
+        .then((res) => res.json())
+        .catch((e) => console.log(e));
+      setResponse(response);
+    };
     getUser();
-  }, []);
-
-  const getUser = async () => {
-    const response = await fetch(`/api/user/${router.query.id}`, {
-      method: "GET",
-      headers: {
-        "Content-type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .catch((e) => console.log(e));
-    setResponse(response);
-  };
+  }, [router.query.id]);
 
   return (
     <Layout title="Inicio de sesión">

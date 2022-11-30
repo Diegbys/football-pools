@@ -23,13 +23,12 @@ export default function Match() {
   React.useEffect(() => {
     if (dataFetchedRef.current) return;
     dataFetchedRef.current = true;
+    const getMatch = async () => {
+      const response = await Fetch("GET", `/api/match/${router.query.id}`);
+      setResponse(response);
+    };
     getMatch();
-  }, []);
-
-  const getMatch = async () => {
-    const response = await Fetch("GET", `/api/match/${router.query.id}`);
-    setResponse(response);
-  };
+  }, [router.query.id]);
 
   const handleSelect = (selected, tie = false) => {
     if (tie) {

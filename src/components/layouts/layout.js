@@ -11,7 +11,7 @@ export default function Layout({ children, title, deprived }) {
     if (deprived && !isLogged()) {
       router.push("/admin/login");
     }
-  }, []);
+  }, [deprived, isLogged, router]);
 
   return (
     <div>

@@ -54,8 +54,8 @@ export default async function handler({ method, query: { id }, body }, res) {
             updateUserPoint(user);
             continue;
           }
-
-          if (body.selected === prediction.winner.valueOf()) {
+          
+          if (body.selected === prediction.winner?.valueOf()) {
             updateUserPoint(user);
           }
         }
